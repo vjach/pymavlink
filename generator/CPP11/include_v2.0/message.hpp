@@ -89,10 +89,10 @@ struct Message {
 /**
  * Converts std::array<char, N> to std::string.
  *
- * Array treated as null-terminated string up to _N chars.
+ * Array treated as null-terminated string up to N chars.
  */
-template<size_t _N>
-std::string to_string(const std::array<char, _N> &a)
+template<size_t N>
+std::string to_string(const std::array<char, N> &a)
 {
 	return std::string(a.data(), strnlen(a.data(), a.size()));
 }
@@ -100,8 +100,8 @@ std::string to_string(const std::array<char, _N> &a)
 /**
  * Convert std::array to comma separated string
  */
-template<typename _T, size_t _N>
-std::string to_string(const std::array<_T, _N> &a)
+template<typename _T, size_t N>
+std::string to_string(const std::array<_T, N> &a)
 {
 	std::stringstream ss;
 	bool first = true;
@@ -127,8 +127,8 @@ std::string to_string(const std::array<_T, _N> &a)
  * @param[out] a
  * @param[in]  s
  */
-template<size_t _N>
-void set_string(std::array<char, _N> &a, const std::string &s)
+template<size_t N>
+void set_string(std::array<char, N> &a, const std::string &s)
 {
 	strncpy(a.data(), s.c_str(), a.size());
 }
@@ -139,8 +139,8 @@ void set_string(std::array<char, _N> &a, const std::string &s)
  * @param[out] a
  * @param[in]  s
  */
-template<size_t _N>
-void set_string_z(std::array<char, _N> &a, const std::string &s)
+template<size_t N>
+void set_string_z(std::array<char, N> &a, const std::string &s)
 {
 	strncpy(a.data(), s.c_str(), a.size() - 1);
 	a[a.size() - 1] = '\0';
