@@ -49,6 +49,23 @@ MACROS = {
 
 EType = collections.namedtuple('EType', ('type', 'max'))
 
+def generate_mavlink_hpp(directory, xml):
+    '''generate mavlink.hpp'''
+    f = open(os.path.join(directory, "mavlink.hpp"), mode='w')
+    t.write(f,'''
+/** @file
+ *  @brief MAVLink comm protocol built from ${basename}.xml
+ *  @see http://mavlink.org
+ */
+#pragma once
+#ifndef MAVLINK_HPP
+#define MAVLINK_HPP
+
+#include "${basename}.hpp"
+
+#endif // MAVLINK_HPP
+''', xml)
+    f.close()
 
 def generate_main_hpp(directory, xml):
     '''generate main header per XML file'''
@@ -446,6 +463,7 @@ def generate_one(basename, xml):
         e.cxx_underlying_type = ' : ' + underlying_type.type if underlying_type else ''
 
     generate_main_hpp(directory, xml)
+    generate_mavlink_hpp(directory, xml)
     for m in xml.message:
         generate_message_hpp(directory, m)
     generate_gtestsuite_hpp(directory, xml)
